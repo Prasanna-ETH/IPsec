@@ -1,0 +1,66 @@
+# ============================================================
+# OMEGA - Sovereign IPsec Security Intelligence Platform
+# Root .gitignore
+# ============================================================
+
+# Python / Backend
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+backend/.pytest_cache/
+backend/*.egg-info/
+backend/dist/
+backend/build/
+backend/.env
+
+# Backend data (runtime generated)
+backend/data/omega.db
+backend/data/models/
+backend/data/reports/
+backend/uploads/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/.env
+frontend/.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Logs
+*.log
+logs/
+
+# Python compiled
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+.pytest_cache/
+
+# uv
+backend/uv.lock
+
+# Keep these
+!backend/requirements.txt
+!backend/render.yaml
+!backend/Procfile
+!backend/.env.example
+!frontend/vercel.json
+!frontend/.env.example
