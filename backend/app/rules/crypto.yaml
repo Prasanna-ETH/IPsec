@@ -1,0 +1,79 @@
+version: "2026.03.1-NIST-RFC"
+rules:
+  - id: IPSEC-CRYPTO-001
+    title: "Legacy 3DES/DES Symmetric Encryption"
+    severity: CRITICAL
+    category: CRYPTO
+    evidence_type: OBSERVED
+    condition:
+      field: "encryption_alg"
+      operator: "in"
+      values: ["3DES", "3DES-CBC", "DES", "DES-CBC", "Blowfish", "RC4", "CAST"]
+    standards_reference: "RFC 8247 Section 3 / NIST SP 800-77 Rev. 1 Section 3.2"
+    description: "The observed IKE proposal specifies legacy 64-bit block size symmetric encryption (3DES/DES). 3DES is vulnerable to Sweet32 collision attacks and is deprecated by NIST and IETF."
+    recommendation: "Migrate immediately to AES-GCM (AEAD 256-bit or 128-bit) or AES-CBC with SHA-256 HMAC integrity."
+
+  - id: IPSEC-CRYPTO-002
+    title: "Insecure NULL Encryption Algorithm"
+    severity: CRITICAL
+    category: CRYPTO
+    evidence_type: OBSERVED
+    condition:
+      field: "encryption_alg"
+      operator: "in"
+      values: ["NULL", "NULL-ENCRYPT"]
+    standards_reference: "RFC 8247 Section 3 / RFC 7296 Section 3.3.2"
+    description: "The observed proposal specifies NULL encryption. Plaintext confidentiality is completely disabled."
+    recommendation: "Enforce AES-256-GCM or AES-256-CBC encryption transforms across all IKE and Child SA proposals."
+
+  - id: IPSEC-CRYPTO-003
+    title: "Weak Integrity / Hash Algorithm (MD5 or SHA-1)"
+    severity: HIGH
+    category: CRYPTO
+    evidence_type: OBSERVED
+    condition:
+      field: "integrity_alg"
+      operator: "in"
+      values: ["HMAC-MD5", "AUTH_HMAC_MD5_96", "HMAC-SHA1", "AUTH_HMAC_SHA1_96", "MD5", "SHA1"]
+    standards_reference: "RFC 8247 Section 3.1 / NIST SP 800-77 Rev. 1 Section 3.3"
+    description: "MD5 and SHA-1 have known collision weaknesses and are classified as MUST NOT or SHOULD NOT by current RFC and NIST specifications."
+    recommendation: "Configure HMAC-SHA-256 (AUTH_HMAC_SHA2_256_128) or HMAC-SHA-384/512, or transition to AES-GCM AEAD."
+
+  - id: IPSEC-DH-001
+    title: "Critical Legacy Diffie-Hellman Group (Group 1 - 768-bit)"
+    severity: CRITICAL
+    category: KEY_MGMT
+    evidence_type: OBSERVED
+    condition:
+      field: "dh_group"
+      operator: "in"
+      values: ["Group 1", "MODP-768", "1"]
+    standards_reference: "RFC 8247 Section 3.3 / NIST SP 800-77 Rev. 1 Table 2"
+    description: "Diffie-Hellman Group 1 provides only 768-bit modulus size, which is vulnerable to nation-state level discrete logarithm precomputations (Logjam attack class)."
+    recommendation: "Upgrade DH group immediately to Group 19 (ECP-256), Group 20 (ECP-384), or Group 14 (MODP-2048 minimum)."
+
+  - id: IPSEC-DH-002
+    title: "Legacy Diffie-Hellman Group (Group 2 - 1024-bit / Group 5 - 1536-bit)"
+    severity: HIGH
+    category: KEY_MGMT
+    evidence_type: OBSERVED
+    condition:
+      field: "dh_group"
+      operator: "in"
+      values: ["Group 2", "MODP-1024", "2", "Group 5", "MODP-1536", "5"]
+    standards_reference: "RFC 8247 Section 3.3 / NIST SP 800-77 Rev. 1 Table 2"
+    description: "Diffie-Hellman Group 2 (1024-bit) and Group 5 (1536-bit) provide insufficient cryptographic security margins under current sovereign computing capabilities."
+    recommendation: "Migrate key exchange configuration to RFC 8247 approved groups: Group 19 (256-bit Elliptic Curve), Group 20 (384-bit Elliptic Curve), or Group 14 (2048-bit MODP)."
+
+  - id: IPSEC-CRYPTO-004
+    title: "Non-AEAD Cipher Mode (CBC without Combined Mode AEAD)"
+    severity: MEDIUM
+    category: CRYPTO
+    evidence_type: OBSERVED
+    condition:
+      field: "encryption_alg"
+      operator: "contains"
+      values: ["CBC"]
+    standards_reference: "RFC 8247 Section 3 / NIST SP 800-77 Rev. 1 Section 3.2"
+    description: "CBC mode with separate integrity transform is susceptible to padding-oracle vulnerabilities if implementation errors occur. AEAD ciphers are recommended."
+    recommendation: "Adopt AES-GCM (Galois/Counter Mode) with 128-bit or 256-bit keys for authenticated encryption."

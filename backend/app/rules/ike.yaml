@@ -1,0 +1,40 @@
+version: "2026.03.1-NIST-RFC"
+rules:
+  - id: IPSEC-IKE-001
+    title: Deprecated IKEv1 Protocol Usage
+    severity: HIGH
+    category: PROTOCOL
+    evidence_type: OBSERVED
+    condition:
+      field: "ike_version"
+      operator: "eq"
+      values: ["IKEv1"]
+    standards_reference: "RFC 9395 (Deprecation of IKEv1) / NIST SP 800-77 Rev. 1 Section 3.1"
+    description: "IKEv1 has been formally deprecated by the IETF (RFC 9395). It lacks integrated AEAD support, has higher handshake round-trips, and contains known protocol design flaws."
+    recommendation: "Upgrade VPN gateway configuration to IKEv2 (RFC 7296) across all peers."
+
+  - id: IPSEC-IKE-002
+    title: IKEv1 Aggressive Mode Observed
+    severity: CRITICAL
+    category: PROTOCOL
+    evidence_type: OBSERVED
+    condition:
+      field: "is_aggressive_mode"
+      operator: "eq"
+      values: [true]
+    standards_reference: "RFC 2409 / NIST SP 800-77 Rev. 1 Appendix C"
+    description: "IKEv1 Aggressive Mode transmits the identity and authentication hash in the clear before encryption is established. Adversaries passively capturing packets can conduct offline dictionary attacks against Pre-Shared Keys (PSK)."
+    recommendation: "Disable Aggressive Mode immediately. Switch to IKEv2 or Main Mode with strong certificates or high-entropy PSK."
+
+  - id: IPSEC-IKE-003
+    title: Weak Pseudo-Random Function (PRF)
+    severity: HIGH
+    category: CRYPTO
+    evidence_type: OBSERVED
+    condition:
+      field: "prf_alg"
+      operator: "in"
+      values: ["PRF_HMAC_MD5", "PRF_HMAC_SHA1", "HMAC-MD5", "HMAC-SHA1"]
+    standards_reference: "RFC 8247 Section 3.2"
+    description: "The negotiated PRF uses MD5 or SHA-1 for cryptographic key derivation."
+    recommendation: "Use PRF_HMAC_SHA2_256, PRF_HMAC_SHA2_384, or PRF_HMAC_SHA2_512."

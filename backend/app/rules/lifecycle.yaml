@@ -1,0 +1,27 @@
+version: "2026.03.1-NIST-RFC"
+rules:
+  - id: IPSEC-LIFE-001
+    title: Uncorrelated ESP SA / Stale Security Association
+    severity: LOW
+    category: KEY_MGMT
+    evidence_type: DERIVED
+    condition:
+      field: "uncorrelated_esp"
+      operator: "eq"
+      values: [true]
+    standards_reference: "RFC 7296 Section 1.3"
+    description: "ESP Security Association observed without preceding IKE negotiation within the capture duration."
+    recommendation: "Ensure full capture window spans initial handshake or verify active rekey intervals."
+
+  - id: IPSEC-LIFE-002
+    title: Excessive Rekey Timing / Stale SA
+    severity: MEDIUM
+    category: KEY_MGMT
+    evidence_type: DERIVED
+    condition:
+      field: "rekey_interval_hours"
+      operator: "gt"
+      values: [8.0]
+    standards_reference: "NIST SP 800-77 Rev. 1 Section 3.4"
+    description: "The estimated lifetime of the Security Association exceeds 8 hours without observed rekeying."
+    recommendation: "Configure periodic rekeying (e.g., every 4 hours or after 4 GB of transfer) to preserve forward secrecy."

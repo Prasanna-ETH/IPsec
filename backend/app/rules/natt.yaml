@@ -1,0 +1,14 @@
+version: "2026.03.1-NIST-RFC"
+rules:
+  - id: IPSEC-NATT-001
+    title: NAT-Traversal (UDP 4500) Active
+    severity: INFORMATIONAL
+    category: METADATA
+    evidence_type: OBSERVED
+    condition:
+      field: "natt_enabled"
+      operator: "eq"
+      values: [true]
+    standards_reference: "RFC 3948 (UDP Encapsulation of IPsec ESP Packets)"
+    description: "IPsec traffic is encapsulated within UDP port 4500 due to presence of Network Address Translation (NAT) devices between endpoints."
+    recommendation: "Ensure intermediate firewalls maintain stateful UDP 4500 session tables and appropriate keepalive timers."

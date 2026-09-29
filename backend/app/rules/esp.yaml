@@ -1,0 +1,40 @@
+version: "2026.03.1-NIST-RFC"
+rules:
+  - id: IPSEC-ESP-001
+    title: Elevated ESP Sequence Gap Rate
+    severity: MEDIUM
+    category: ANOMALY
+    evidence_type: DERIVED
+    condition:
+      field: "sequence_gap_rate"
+      operator: "gt"
+      values: [0.05]
+    standards_reference: "RFC 4303 Section 3.3.3"
+    description: "ESP sequence numbers exhibit greater than 5% missing sequence increments, indicating packet loss, active network throttling, or transmission errors along the transit path."
+    recommendation: "Inspect intermediate routers and MTU settings for fragmentation or packet drops."
+
+  - id: IPSEC-ESP-002
+    title: Suspected Duplicate / Replayed ESP Sequence Numbers
+    severity: HIGH
+    category: ANOMALY
+    evidence_type: DERIVED
+    condition:
+      field: "replay_suspect_count"
+      operator: "gt"
+      values: [0]
+    standards_reference: "RFC 4303 Section 3.4.3 (Anti-Replay Protection)"
+    description: "Observed duplicate or out-of-window ESP sequence numbers under the same Security Parameter Index (SPI)."
+    recommendation: "Ensure anti-replay windowing is strictly enabled on both IPsec gateways and investigate potential network packet duplication or spoofing."
+
+  - id: IPSEC-ESP-003
+    title: Unidirectional ESP Traffic Flow
+    severity: LOW
+    category: METADATA
+    evidence_type: DERIVED
+    condition:
+      field: "direction_ratio"
+      operator: "gt"
+      values: [0.95]
+    standards_reference: "RFC 4301 / Operational Security Baseline"
+    description: "ESP traffic is heavily skewed in one direction with near zero return packets, indicating potential unidirectional tunneling or asymmetric routing."
+    recommendation: "Verify bidirectional routing policies and firewall state tracking for the IPsec peer endpoints."
