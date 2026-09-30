@@ -153,7 +153,7 @@ export const CaptureCenterPage: React.FC<Props> = ({ onNavigate }) => {
           <Layers className="w-4 h-4 text-blue-600" />
           Pre-Generated Testbed Network Captures (One-Click Ingestion)
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Sample 1: Hardened */}
           <div className="p-3.5 bg-slate-50 border border-slate-200 rounded hover:border-blue-300 transition-colors flex flex-col justify-between">
             <div>
@@ -202,6 +202,26 @@ export const CaptureCenterPage: React.FC<Props> = ({ onNavigate }) => {
               className="mt-3 w-full py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded text-xs font-semibold"
             >
               Analyze NAT-T (UDP 4500)
+            </button>
+          </div>
+
+          {/* Sample 4: 4-Tunnel Multi-Scenario Learning PCAP */}
+          <div className="p-3.5 bg-indigo-50/50 border border-indigo-200 rounded hover:border-indigo-400 transition-colors flex flex-col justify-between">
+            <div>
+              <div className="font-bold text-indigo-950 text-xs flex items-center justify-between">
+                <span>omega_4_tunnel_learning.pcap</span>
+                <span className="text-[9px] bg-indigo-200/60 text-indigo-800 px-1.5 py-0.5 rounded font-mono">4 TUNNELS</span>
+              </div>
+              <div className="text-[11px] text-slate-600 mt-1">
+                Comprehensive trace: 4 distinct tunnels (Compliant IKEv2, Legacy 3DES, Sequence Gaps, Replay/Duplicates, and NAT-T 4500).
+              </div>
+            </div>
+            <button
+              onClick={() => handleLoadSample('omega_4_tunnel_learning')}
+              disabled={isUploading || !!activeAnalysisId}
+              className="mt-3 w-full py-1.5 bg-indigo-700 hover:bg-indigo-800 text-white rounded text-xs font-semibold"
+            >
+              Analyze 4-Tunnel Trace
             </button>
           </div>
         </div>
