@@ -10,6 +10,7 @@ import {
   AlertCircle,
   Database,
   Shield,
+  ShieldCheck,
   Activity
 } from 'lucide-react';
 
