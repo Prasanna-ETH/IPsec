@@ -54,7 +54,7 @@ export const Sidebar: React.FC<Props> = ({
   ];
 
   return (
-    <aside className="w-60 bg-[#0F2544] text-slate-300 flex flex-col justify-between border-r border-slate-800 shrink-0 select-none min-h-[calc(100vh-3.5rem)]">
+    <aside className="w-60 bg-[#0F2544] text-slate-300 flex flex-col justify-between border-r border-slate-800 shrink-0 select-none h-full overflow-y-auto">
       {/* Navigation list */}
       <div className="py-3 px-2">
         <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">

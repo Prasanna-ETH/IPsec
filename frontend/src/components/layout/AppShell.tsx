@@ -16,7 +16,7 @@ export const AppShell: React.FC<Props> = ({
   children
 }) => {
   return (
-    <div className="min-h-screen bg-[#F4F6F9] flex flex-col antialiased">
+    <div className="h-screen bg-[#F4F6F9] flex flex-col antialiased overflow-hidden">
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
