@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Lock, Cpu } from 'lucide-react';
+import { Lock, Cpu } from 'lucide-react';
 
 interface Props {
   airGapped?: boolean;
@@ -10,9 +10,11 @@ export const Header: React.FC<Props> = ({ airGapped = true }) => {
     <header className="bg-[#0A192F] text-white border-b border-slate-800 h-16 px-5 flex items-center justify-between sticky top-0 z-30 shadow-sm">
       {/* Institutional Context & TRINETRA Wordmark */}
       <div className="flex items-center gap-3.5">
-        <div className="w-8 h-8 bg-blue-700 text-white flex items-center justify-center rounded border border-blue-500 shadow-xs shrink-0">
-          <ShieldCheck className="w-5 h-5 text-white" />
-        </div>
+        <img
+          src="/favicon.svg"
+          alt="TRINETRA Logo"
+          className="w-8 h-8 object-contain shrink-0 rounded shadow-xs"
+        />
         <div>
           <div className="text-[9px] font-bold tracking-wider uppercase text-slate-400 leading-tight">
             NATIONAL TECHNICAL RESEARCH ORGANISATION <span className="text-slate-500 font-normal">· Government of India</span>
