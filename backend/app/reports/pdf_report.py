@@ -88,8 +88,8 @@ def generate_pdf_report(
     elements = []
 
     # Header section
-    elements.append(Paragraph("OMEGA // SOVEREIGN IPSEC SECURITY ASSESSMENT", title_style))
-    elements.append(Paragraph("Sovereign IPsec Security Intelligence & Assessment Platform | SIH26160", subtitle_style))
+    elements.append(Paragraph("TRINETRA // SOVEREIGN IPSEC SECURITY ASSESSMENT", title_style))
+    elements.append(Paragraph("Sovereign IPsec Security Intelligence & Assessment Platform | Developed by Omega Coders for SIH 2026 (SIH26160)", subtitle_style))
     elements.append(Spacer(1, 8))
     elements.append(HRFlowable(width="100%", thickness=1.5, color=colors.HexColor("#0F2544"), spaceAfter=12))
 

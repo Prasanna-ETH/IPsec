@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Server, Lock, Cpu } from 'lucide-react';
+import { ShieldCheck, Lock, Cpu } from 'lucide-react';
 
 interface Props {
   airGapped?: boolean;
@@ -7,23 +7,26 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ airGapped = true }) => {
   return (
-    <header className="bg-[#0A192F] text-white border-b border-slate-800 h-14 px-5 flex items-center justify-between sticky top-0 z-30 shadow-sm">
-      {/* Wordmark and Subtitle */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-blue-700 text-white font-bold flex items-center justify-center rounded text-sm tracking-wider border border-blue-500">
-            Ω
+    <header className="bg-[#0A192F] text-white border-b border-slate-800 h-16 px-5 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+      {/* Institutional Context & TRINETRA Wordmark */}
+      <div className="flex items-center gap-3.5">
+        <div className="w-8 h-8 bg-blue-700 text-white flex items-center justify-center rounded border border-blue-500 shadow-xs shrink-0">
+          <ShieldCheck className="w-5 h-5 text-white" />
+        </div>
+        <div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-slate-400 leading-tight">
+            NATIONAL TECHNICAL RESEARCH ORGANISATION <span className="text-slate-500 font-normal">· Government of India</span>
           </div>
-          <div>
-            <div className="font-extrabold text-base tracking-wider text-slate-100 flex items-center gap-2">
-              OMEGA
-              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-blue-900/80 text-blue-300 border border-blue-700/60 uppercase">
-                SIH26160
-              </span>
-            </div>
-            <div className="text-[11px] text-slate-400 font-medium tracking-tight -mt-0.5">
+          <div className="flex items-center gap-2.5 mt-0.5">
+            <span className="font-extrabold text-base tracking-wider text-white leading-none">
+              TRINETRA
+            </span>
+            <span className="text-[11px] text-slate-300 font-medium hidden md:inline leading-none">
               Sovereign IPsec Security Intelligence & Assessment Platform
-            </div>
+            </span>
+            <span className="text-[9.5px] font-mono px-2 py-0.5 rounded bg-blue-950/80 text-blue-300 border border-blue-700/60 hidden xl:inline leading-none">
+              SIH 2026 · Problem Statement SIH26160 · Team Omega Coders
+            </span>
           </div>
         </div>
       </div>

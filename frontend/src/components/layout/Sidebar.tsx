@@ -94,11 +94,14 @@ export const Sidebar: React.FC<Props> = ({
 
       {/* Footer info box */}
       <div className="p-3 border-t border-slate-800 bg-[#0A192F]/60 text-[11px] text-slate-400 space-y-1">
-        <div className="flex justify-between items-center font-mono">
-          <span>NTRO / SIH26160</span>
+        <div className="flex justify-between items-center font-mono text-[10px]">
+          <span className="font-semibold text-slate-300">SIH 2026 / SIH26160</span>
           <span className="text-emerald-400">PASV-v1.0</span>
         </div>
-        <div className="text-[10px] text-slate-500">
+        <div className="text-[10px] text-blue-400/90 font-medium">
+          Team Omega Coders
+        </div>
+        <div className="text-[9.5px] text-slate-500">
           No payload decryption required.
         </div>
       </div>

@@ -62,11 +62,12 @@ export const SystemPage: React.FC<Props> = ({ onNavigate }) => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-slate-800 gap-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-lg">
-              Ω
+              <ShieldCheck className="w-6 h-6 text-white" />
             </div>
             <div>
-              <div className="text-sm font-bold text-slate-100">{status.project_name} SOVEREIGN PLATFORM</div>
-              <div className="text-xs text-slate-400">{status.project_subtitle}</div>
+              <div className="text-sm font-bold text-slate-100">TRINETRA SOVEREIGN PLATFORM</div>
+              <div className="text-xs text-slate-400">Sovereign IPsec Security Intelligence & Assessment Platform</div>
+              <div className="text-[10px] text-blue-300/80 font-mono mt-0.5">Developed by Omega Coders for Smart India Hackathon 2026 · Problem Statement: SIH26160</div>
             </div>
           </div>
 
@@ -110,7 +111,7 @@ export const SystemPage: React.FC<Props> = ({ onNavigate }) => {
           </h3>
           <dl className="divide-y divide-slate-100 text-xs font-mono">
             <div className="py-2 flex justify-between">
-              <dt className="text-slate-500 font-sans font-medium">OMEGA Engine Version:</dt>
+              <dt className="text-slate-500 font-sans font-medium">TRINETRA Engine Version:</dt>
               <dd className="font-bold text-slate-800">{status.version}</dd>
             </div>
             <div className="py-2 flex justify-between">
