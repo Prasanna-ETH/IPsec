@@ -1,5 +1,7 @@
 import os
 import hashlib
+from datetime import datetime
+from pathlib import Path
 import aiofiles
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, BackgroundTasks, Query
 from sqlalchemy.orm import Session
@@ -13,6 +15,20 @@ from app.core.config import settings
 from app.services.analysis_service import analysis_service
 
 router = APIRouter(prefix="/captures", tags=["Captures"])
+
+def get_sample_dir() -> Path:
+    """Finds the sample_captures directory across various execution layouts."""
+    possible_paths = [
+        settings.BASE_DIR / "sample_captures",
+        settings.BASE_DIR.parent / "sample_captures",
+        Path.cwd() / "sample_captures",
+        Path(__file__).resolve().parent.parent.parent.parent / "sample_captures",
+        Path(__file__).resolve().parent.parent.parent / "sample_captures"
+    ]
+    for p in possible_paths:
+        if p.exists() and p.is_dir():
+            return p
+    return settings.BASE_DIR / "sample_captures"
 
 @router.post("", response_model=CaptureCreateResponse)
 async def upload_capture(
@@ -68,28 +84,25 @@ async def upload_capture(
         created_at=capture.created_at
     )
 
-from pathlib import Path
-
-SAMPLE_DIR = Path(__file__).resolve().parent.parent.parent.parent / "sample_captures"
-
 @router.post("/sample/{sample_name}", response_model=CaptureCreateResponse)
 def load_sample_capture(
     sample_name: str,
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db)
 ):
-    src_file = SAMPLE_DIR / f"{sample_name}.pcap"
+    sample_dir = get_sample_dir()
+    src_file = sample_dir / f"{sample_name}.pcap"
     if not src_file.exists():
-        src_file = SAMPLE_DIR / sample_name
+        src_file = sample_dir / sample_name
     if not src_file.exists():
-        raise HTTPException(status_code=404, detail=f"Sample capture '{sample_name}' not found in sample_captures/ directory.")
+        raise HTTPException(status_code=404, detail=f"Sample capture '{sample_name}' not found in sample_captures/ directory ({sample_dir}).")
 
     with open(src_file, "rb") as f:
         content = f.read()
         sha256_hex = hashlib.sha256(content).hexdigest()
         file_size = len(content)
 
-    dest_path = settings.UPLOAD_DIR / src_file.name
+    dest_path = settings.UPLOAD_DIR / f"{int(datetime.utcnow().timestamp())}_{src_file.name}"
     with open(dest_path, "wb") as f:
         f.write(content)
 
@@ -118,8 +131,6 @@ def load_sample_capture(
         current_stage=capture.current_stage,
         created_at=capture.created_at
     )
-
-from datetime import datetime
 
 @router.get("", response_model=list[CaptureSummaryResponse])
 def list_captures(db: Session = Depends(get_db)):
